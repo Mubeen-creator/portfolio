@@ -1,5 +1,4 @@
 "use client";
-
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
@@ -30,7 +29,6 @@ const HeroSection = () => {
             }}
           />
         ))}
-
         {/* Vertical Lines */}
         {[...Array(20)].map((_, i) => (
           <motion.div
@@ -52,12 +50,11 @@ const HeroSection = () => {
             }}
           />
         ))}
-
         {/* Floating Particles */}
         {[...Array(50)].map((_, i) => (
           <motion.div
             key={`particle-${i}`}
-            className="absolute w-1 h-1 rounded-full bg-white/20"
+            className="absolute w-2 h-2 rounded-full bg-white/50"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
@@ -65,8 +62,8 @@ const HeroSection = () => {
             animate={{
               scale: [0.5, 1, 0.5],
               opacity: [0.2, 0.7, 0.2],
-              x: [-10, 10],
-              y: [-10, 10],
+              x: [-20, 20],
+              y: [-20, 20],
             }}
             transition={{
               duration: 3 + Math.random() * 3,
@@ -80,40 +77,47 @@ const HeroSection = () => {
     );
   };
 
-  // Typing Effect (similar to previous implementation)
-  const TypingEffect = ({
-    text,
-    speed = 100,
-    eraseSpeed = 50,
-    delay = 1000,
-  }) => {
-    const [displayedText, setDisplayedText] = React.useState("");
-    const [isDeleting, setIsDeleting] = React.useState(false);
-    const [index, setIndex] = React.useState(0);
-
-    const halfLength = Math.floor(text.length / 2);
-
-    React.useEffect(() => {
-      let typingInterval;
-
-      if (!isDeleting && index < text.length) {
-        typingInterval = setTimeout(() => {
-          setDisplayedText((prev) => prev + text.charAt(index));
-          setIndex((prev) => prev + 1);
-        }, speed);
-      } else if (isDeleting && index > halfLength) {
-        typingInterval = setTimeout(() => {
-          setDisplayedText((prev) => prev.slice(0, -1));
-          setIndex((prev) => prev - 1);
-        }, eraseSpeed);
-      } else {
-        setTimeout(() => setIsDeleting(!isDeleting), delay);
-      }
-
-      return () => clearTimeout(typingInterval);
-    }, [text, speed, eraseSpeed, delay, index, isDeleting]);
-
-    return <span>{displayedText}</span>;
+  // Outline Text Component with Enhanced Shine Effect
+  const OutlineText = ({ children }) => {
+    return (
+      <div className="absolute inset-0 overflow-hidden pointer-events-none z-0">
+        <h1
+          className="
+            relative 
+            text-[250px] 
+            font-extrabold 
+            uppercase 
+            text-transparent 
+            bg-clip-text 
+            bg-gradient-to-r 
+            from-gray-700 
+            to-gray-900 
+            top-1/2 
+            left-1/2 
+            transform 
+            -translate-x-1/2 
+            -translate-y-1/2 
+            opacity-20 
+            whitespace-nowrap 
+            
+            # Shine Effect
+            before:absolute 
+            before:inset-0 
+            before:bg-gradient-to-r 
+            before:from-transparent 
+            before:via-white/30 
+            before:to-transparent 
+            before:animate-shine
+          "
+          style={{
+            WebkitTextStroke: "2px #4a5568", // Outline effect
+            WebkitBackgroundClip: "text",
+          }}
+        >
+          {children}
+        </h1>
+      </div>
+    );
   };
 
   return (
@@ -121,8 +125,12 @@ const HeroSection = () => {
       {/* Futuristic Background */}
       <FuturisticBackground />
 
-      <div className="relative z-10 max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between w-full">
-        <div className="w-full md:w-1/2 space-y-6 text-center md:text-left">
+      {/* Outline Text */}
+      <OutlineText>MUBEEN</OutlineText>
+
+      <div className="relative z-20 max-w-7xl mx-auto px-8 flex flex-col md:flex-row items-center justify-between w-full">
+        {/* Rest of your existing code remains the same */}
+        <div className="w-full md:w-1/2 space-y-6 text-center md:text-left z-30 relative">
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,7 +153,7 @@ const HeroSection = () => {
             transition={{ duration: 0.7 }}
             className="text-3xl text-cyan-400"
           >
-            <TypingEffect text="I am a Full Stack Web App Developer" />
+            Full Stack Web App Developer
           </motion.h2>
           <motion.button
             initial={{ opacity: 0, scale: 0.9 }}
@@ -165,7 +173,7 @@ const HeroSection = () => {
             />
           </motion.button>
         </div>
-        <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0">
+        <div className="w-full md:w-1/2 flex justify-center md:justify-end mt-6 md:mt-0 z-30 relative">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
